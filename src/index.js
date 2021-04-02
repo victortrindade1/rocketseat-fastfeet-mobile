@@ -1,13 +1,8 @@
 import React from 'react';
-import { View } from 'react-native';
-import Teste from '~/components/Teste';
+import Routes from './routes';
 
-const App = () => {
-  return (
-    <View>
-      <Teste />
-    </View>
-  );
-};
+function App() {
+  return <Routes />;
+}
 
 export default App;
