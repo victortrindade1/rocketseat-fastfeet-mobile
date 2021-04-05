@@ -1,27 +1,30 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Controller } from 'react-hook-form';
-import { Text, TextInput } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import { Container, TInput } from './styles';
+import { Text } from 'react-native';
+import { Container, TInput, InputIcon, ErrorMessage } from './styles';
 
 const Input = ({
   control,
   errors,
   placeholder,
   name,
+  // rules
   style,
   icon,
   ...rest
 }) => (
   <>
     <Container style={style}>
-      {icon && <Icon name={icon} size={20} color="rgba(255,255,255, 0.6)" />}
+      {icon && <InputIcon name={icon} size={20} />}
       <Controller
         control={control}
+        name={name}
+        defaultValue=""
+        // rules={rules}
         render={({ onChange, onBlur, value }) => (
-          <TextInput
-            style={style}
+          <TInput
+            // style={style}
             placeholder={placeholder}
             onBlur={onBlur}
             onChangeText={item => onChange(item)}
@@ -29,11 +32,9 @@ const Input = ({
             {...rest}
           />
         )}
-        name={name}
-        defaultValue=""
       />
     </Container>
-    {errors[name] && <Text>{errors[name].message}</Text>}
+    {errors[name] && <ErrorMessage>{errors[name].message}</ErrorMessage>}
   </>
 );
 

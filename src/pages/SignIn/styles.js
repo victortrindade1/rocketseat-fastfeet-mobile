@@ -1,13 +1,34 @@
 import styled from 'styled-components/native';
 import Input from '~/components/Input';
+import Button from '~/components/Button';
 
-export const Container = styled.View``;
+import colors from '~/styles/colors';
 
-export const LoginInput = styled(Input).attrs({
-  placeholderTextColor: 'rgba(255,255,255,0.8)',
+export const Container = styled.KeyboardAvoidingView.attrs({
+  enabled: Platform.OS === 'ios',
+  behavior: 'padding',
 })`
-  font-size: 26px;
-  margin-left: 10px;
-  color: #edabcd;
-  background-color: #3cbc8d;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+
+  background-color: ${colors.primary};
+`;
+
+export const FormContainer = styled.View`
+  align-self: stretch;
+  margin-top: 50px;
+  padding: 0 25px;
+`;
+
+export const Logo = styled.Image.attrs({
+  tintColor: '#fff',
+})``;
+
+export const LoginInput = styled(Input)`
+  margin-bottom: 15.5px;
+`;
+
+export const LoginButton = styled(Button)`
+  background-color: #82bf18;
 `;
