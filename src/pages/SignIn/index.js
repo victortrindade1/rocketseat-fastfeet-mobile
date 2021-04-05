@@ -29,9 +29,7 @@ export default function SignIn({ navigation }) {
   });
 
   const onSubmit = () => {
-    // clearErrors();
-
-    return navigation.navigate('Dashboard');
+    // return navigation.navigate('Dashboard');
   };
 
   useEffect(() => {
