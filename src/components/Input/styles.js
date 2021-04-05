@@ -6,7 +6,7 @@ export const Container = styled.View`
   padding: 0 25px;
   height: 45px;
   background: #fff;
-  border-color: #ddd;
+  border-color: ${({ errorStyle }) => (errorStyle ? colors.danger : '#ddd')};
   border-width: 1px;
   border-radius: 4px;
 

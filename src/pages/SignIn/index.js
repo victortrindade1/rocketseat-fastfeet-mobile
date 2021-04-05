@@ -1,11 +1,9 @@
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { StatusBar } from 'react-native';
 
 import DismissKeyboard from '~/util/DismissKeyboard';
 
 import logo from '~/assets/logo/fastfeet-logo.png';
-import colors from '~/styles/colors';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
@@ -18,7 +16,7 @@ import {
   Logo,
 } from './styles';
 
-export default function SignIn() {
+export default function SignIn({ navigation }) {
   const validationSchema = Yup.object().shape({
     login: Yup.string()
       .min(5, 'O ID possui no mínimo 5 caracteres')
@@ -30,9 +28,10 @@ export default function SignIn() {
     resolver: yupResolver(validationSchema),
   });
 
-  const onSubmit = data => {
+  const onSubmit = () => {
     // clearErrors();
-    return console.log(data);
+
+    return navigation.navigate('Dashboard');
   };
 
   useEffect(() => {
@@ -41,8 +40,6 @@ export default function SignIn() {
 
   return (
     <>
-      {console.log(errors)}
-      <StatusBar barStyle="light-content" backgroundColor={colors.primary} />
       <DismissKeyboard>
         <Container>
           <Logo source={logo} />

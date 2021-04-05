@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Controller } from 'react-hook-form';
-import { Text } from 'react-native';
+
 import { Container, TInput, InputIcon, ErrorMessage } from './styles';
 
 const Input = ({
@@ -9,19 +9,17 @@ const Input = ({
   errors,
   placeholder,
   name,
-  // rules
   style,
   icon,
   ...rest
 }) => (
   <>
-    <Container style={style}>
+    <Container style={style} errorStyle={errors[name]}>
       {icon && <InputIcon name={icon} size={20} />}
       <Controller
         control={control}
         name={name}
         defaultValue=""
-        // rules={rules}
         render={({ onChange, onBlur, value }) => (
           <TInput
             // style={style}
