@@ -1,8 +1,20 @@
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
-import SignIn from './pages/SignIn';
+import { createBottomTabNavigator } from 'react-navigation-tabs';
 
-export default createAppContainer(
-  createSwitchNavigator({
-    SignIn,
-  }),
-);
+import SignIn from './pages/SignIn';
+import Dashboard from './pages/Dashboard';
+
+export default (signedIn = false) =>
+  createAppContainer(
+    createSwitchNavigator(
+      {
+        SignIn,
+        App: createBottomTabNavigator({
+          Dashboard,
+        }),
+      },
+      {
+        initialRouteName: signedIn ? 'App' : 'SignIn',
+      },
+    ),
+  );

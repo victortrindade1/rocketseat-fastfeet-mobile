@@ -5,19 +5,19 @@ import { PersistGate } from 'redux-persist/integration/react';
 
 import './config/ReactotronConfig';
 
-import Routes from './routes';
+import App from './App';
 import { store, persistor } from './store';
 import colors from '~/styles/colors';
 
-function App() {
+function Index() {
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>
         <StatusBar barStyle="light-content" backgroundColor={colors.primary} />
-        <Routes />
+        <App />
       </PersistGate>
     </Provider>
   );
 }
 
-export default App;
+export default Index;

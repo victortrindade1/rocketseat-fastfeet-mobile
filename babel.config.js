@@ -5,9 +5,11 @@ module.exports = {
       'babel-plugin-root-import',
       {
         rootPathPrefix: '~',
-        rootPathSuffix: 'src'
-      }
-    ]
+        rootPathSuffix: 'src',
+      },
+    ],
+    // react-native-reanimated precisa ser o último plugin
+    'react-native-reanimated/plugin',
   ],
   env: {
     production: {
@@ -15,9 +17,9 @@ module.exports = {
         'babel-plugin-root-import',
         {
           rootPathPrefix: '~',
-          rootPathSuffix: 'src'
-        }
-      ]
-    }
-  }
+          rootPathSuffix: 'src',
+        },
+      ],
+    },
+  },
 };
