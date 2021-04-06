@@ -1,5 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { signInRequest } from '~/store/modules/auth/actions';
 
 import DismissKeyboard from '~/util/DismissKeyboard';
 
@@ -16,23 +19,37 @@ import {
   Logo,
 } from './styles';
 
-export default function SignIn({ navigation }) {
+export default function SignIn() {
+  const dispatch = useDispatch();
+
+  const loading = useSelector(state => state.auth.loading);
+
   const validationSchema = Yup.object().shape({
     login: Yup.string()
-      .min(5, 'O ID possui no mínimo 5 caracteres')
       .max(10, 'O ID possui até 10 caracteres')
-      .required('Required'),
+      .required('Campo obrigatório'),
   });
 
-  const { control, handleSubmit, errors, clearErrors } = useForm({
+  const {
+    control,
+    handleSubmit,
+    errors,
+    clearErrors,
+    watch,
+    setValue,
+  } = useForm({
     resolver: yupResolver(validationSchema),
   });
 
+  // Campo login sendo digitado pelo usuário
+  const watchId = watch('login');
+
   const onSubmit = () => {
-    // return navigation.navigate('Dashboard');
+    dispatch(signInRequest(watchId));
   };
 
   useEffect(() => {
+    setValue('login', '');
     clearErrors();
   }, []);
 
@@ -54,7 +71,7 @@ export default function SignIn({ navigation }) {
               returnKeyType="send"
               onSubmitEditing={handleSubmit(onSubmit)}
             />
-            <LoginButton onPress={handleSubmit(onSubmit)}>
+            <LoginButton onPress={handleSubmit(onSubmit)} loading={loading}>
               Entrar no sistema
             </LoginButton>
           </FormContainer>
