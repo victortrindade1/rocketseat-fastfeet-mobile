@@ -7,7 +7,7 @@ import './config/ReactotronConfig';
 
 import App from './App';
 import { store, persistor } from './store';
-import colors from '~/styles/colors';
+import { colors } from '~/styles/colors';
 
 function Index() {
   return (

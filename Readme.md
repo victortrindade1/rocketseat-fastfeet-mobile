@@ -1,5 +1,6 @@
 Onde estou:
 
-Autenticação do usuário
+Como carregar dados localhost http?
 
-Ainda não sei se vou criar mais banco, se vou mudar rota do backend...
+2- Fazer Avatar component com letras (tem no fastfeet frontend)
+3- Fazer logout

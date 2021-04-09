@@ -2,7 +2,7 @@ import styled from 'styled-components/native';
 import Input from '~/components/Input';
 import Button from '~/components/Button';
 
-import colors from '~/styles/colors';
+import { colors } from '~/styles/colors';
 
 export const Container = styled.KeyboardAvoidingView.attrs({
   enabled: Platform.OS === 'ios',
