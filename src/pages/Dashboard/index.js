@@ -20,23 +20,21 @@ import {
 export default function Dashboard() {
   const user = useSelector(state => state.user);
 
-  console.tron.log(user.profile.avatar.url);
-
   return (
     <Container>
       <HeaderContainer>
         <UserContainer>
           <UserAvatar
-            source={
-              user.profile?.avatar
-                ? {
-                    uri: __DEV__
-                      ? // O Android não aceita http://localhost, apenas https
-                        'https://avatars.githubusercontent.com/u/40868932?s=400&u=a6990d8f4600c7503111aaa2448b37f4c86f2a91&v=4'
-                      : user.profile.avatar.url,
-                  }
-                : null
+            url={
+              user.profile.avatar.url
+                ? __DEV__
+                  ? 'https://avatars.githubusercontent.com/u/40868932?s=400&u=a6990d8f4600c7503111aaa2448b37f4c86f2a91&v=4'
+                  : user.profile.avatar.url
+                : undefined
             }
+            name={user.profile.name}
+            index={1} // Não é lista
+            alt="Avatar"
           />
           <UserNameContainer>
             <WelcomeText>Bem-vindo de volta,</WelcomeText>

@@ -1,4 +1,5 @@
 import styled from 'styled-components/native';
+import Avatar from '~/components/Avatar';
 
 export const Container = styled.SafeAreaView`
   flex: 1;
@@ -14,14 +15,10 @@ export const HeaderContainer = styled.View`
 
 export const UserContainer = styled.View`
   flex-direction: row;
+  padding-left: 20px;
 `;
 
-export const UserAvatar = styled.Image`
-  width: 68px;
-  height: 68px;
-  border-radius: 34px;
-  margin-left: 20px;
-`;
+export const UserAvatar = styled(Avatar)``;
 
 export const UserNameContainer = styled.View`
   justify-content: center;
