@@ -7,7 +7,6 @@ export const Container = styled.View`
   width: 68px;
   height: 68px;
   overflow: hidden;
-  background-color: #123465;
 `;
 
 export const PhotoAvatar = styled.Image`
@@ -23,7 +22,7 @@ export const LetterAvatarContainer = styled.View`
 
 export const LetterAvatarText = styled.Text`
   color: ${props => darken(0.3, props.color)};
-  line-height: 80px;
+  line-height: 68px;
   text-align: center;
   font-size: 31px;
 `;

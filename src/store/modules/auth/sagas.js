@@ -23,9 +23,9 @@ export function* signIn({ payload }) {
   }
 }
 
-// export function signOut() {}
+export function* signOut() {}
 
 export default all([
   takeLatest('@auth/SIGN_IN_REQUEST', signIn),
-  // takeLatest('@auth/SIGN_OUT', signOut),
+  takeLatest('@auth/SIGN_OUT', signOut),
 ]);
