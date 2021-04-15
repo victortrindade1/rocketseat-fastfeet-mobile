@@ -44,4 +44,39 @@ export const LogoutContainer = styled.View`
   margin-right: 32.5px;
 `;
 
-export const DeliveriesContainer = styled.View``;
+export const DeliveriesContainer = styled.View`
+  flex: 1;
+  padding: 20px 20px;
+  background-color: #fff;
+`;
+
+export const HeaderBody = styled.View`
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+export const Title = styled.Text`
+  font-size: 22px;
+  color: #444;
+  font-weight: bold;
+`;
+
+export const FilterContainer = styled.View`
+  flex-direction: row;
+`;
+
+export const Link = styled.TouchableOpacity`
+  padding-left: 15px;
+`;
+
+export const LinkText = styled.Text`
+  color: #999;
+  font-weight: bold;
+  font-size: 12px;
+`;
+
+export const ListDeliveries = styled.FlatList.attrs({
+  showsVerticalScrollIndicator: false,
+  contentContainerStyle: { padding: 30 },
+})``;

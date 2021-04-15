@@ -5,6 +5,8 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { signOut } from '~/store/modules/auth/actions';
 
+import Delivery from '~/components/Delivery';
+
 import { colors } from '~/styles/colors';
 
 import {
@@ -17,6 +19,12 @@ import {
   UserName,
   LogoutContainer,
   DeliveriesContainer,
+  HeaderBody,
+  Title,
+  FilterContainer,
+  Link,
+  LinkText,
+  ListDeliveries,
 } from './styles';
 
 export default function Dashboard() {
@@ -27,6 +35,8 @@ export default function Dashboard() {
   function handleLogout() {
     dispatch(signOut());
   }
+
+  const data = [1, 2, 3, 4, 5];
 
   return (
     <>
@@ -44,7 +54,7 @@ export default function Dashboard() {
                   : undefined
               }
               name={user.profile.name}
-              index={1} // Não é lista
+              index={0} // Não é lista
               alt="Avatar"
             />
             <UserNameContainer>
@@ -60,7 +70,26 @@ export default function Dashboard() {
           </LogoutContainer>
         </HeaderContainer>
 
-        <DeliveriesContainer />
+        <DeliveriesContainer>
+          <HeaderBody>
+            <Title>Entregas</Title>
+
+            <FilterContainer>
+              <Link onPress={() => navigation.navigate('Pendentes')}>
+                <LinkText>Pendentes</LinkText>
+              </Link>
+              <Link onPress={() => navigation.navigate('Entregues')}>
+                <LinkText>Entregues</LinkText>
+              </Link>
+            </FilterContainer>
+          </HeaderBody>
+
+          <ListDeliveries
+            data={data}
+            keyExtractor={item => String(item)}
+            renderItem={({ item }) => <Delivery data={item} />}
+          />
+        </DeliveriesContainer>
       </Container>
     </>
   );
