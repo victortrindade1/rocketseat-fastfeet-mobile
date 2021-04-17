@@ -22,7 +22,7 @@ export const LetterAvatarContainer = styled.View`
 
 export const LetterAvatarText = styled.Text`
   color: ${props => darken(0.3, props.color)};
-  line-height: 68px;
+  line-height: 60px;
   text-align: center;
   font-size: 31px;
 `;

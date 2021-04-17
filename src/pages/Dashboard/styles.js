@@ -23,6 +23,7 @@ export const UserAvatar = styled(Avatar)``;
 export const UserNameContainer = styled.View`
   justify-content: center;
   padding: 12px;
+  max-width: 80%;
 `;
 
 export const WelcomeText = styled.Text`
@@ -35,7 +36,7 @@ export const UserName = styled.Text.attrs({
 })`
   color: #444;
   font-size: 22px;
-  max-width: 180px;
+  /* max-width: 180px; */
   font-weight: bold;
 `;
 
