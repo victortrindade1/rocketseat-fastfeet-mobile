@@ -1,11 +1,13 @@
 import React from 'react';
 
+import Timeline from '~/components/Timeline';
+
 import {
   Container,
   Title,
   DeliveryIcon,
   TitleText,
-  Timeline,
+  // Timeline,
   FooterContainer,
   FooterTitle,
   FooterText,
