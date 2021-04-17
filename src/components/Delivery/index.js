@@ -7,7 +7,7 @@ import {
   Title,
   DeliveryIcon,
   TitleText,
-  // Timeline,
+  TimelineContainer,
   FooterContainer,
   FooterTitle,
   FooterText,
@@ -24,7 +24,9 @@ const Delivery = () => {
         <TitleText>Encomenda 01</TitleText>
       </Title>
 
-      <Timeline />
+      <TimelineContainer>
+        <Timeline />
+      </TimelineContainer>
 
       <FooterContainer>
         <Div>

@@ -35,20 +35,21 @@ export const TitleText = styled.Text`
   padding-left: 10px;
 `;
 
-export const Timeline = styled.View`
-  height: 26px;
-  background-color: #eee;
-`;
-
 export const FooterContainer = styled.View`
   height: 64px;
   background-color: #f8f9fd;
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
+  margin-top: 20px;
+  border-radius: 4px;
 `;
 
 export const Div = styled.View``;
+
+export const TimelineContainer = styled.View`
+  margin: 0px 20px;
+`;
 
 export const FooterTitle = styled.Text`
   font-size: 8px;

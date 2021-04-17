@@ -46,7 +46,7 @@ export const LogoutContainer = styled.View`
 
 export const DeliveriesContainer = styled.View`
   flex: 1;
-  padding: 20px 20px;
+  padding: 20px 20px 0px 20px;
   background-color: #fff;
 `;
 
@@ -54,6 +54,7 @@ export const HeaderBody = styled.View`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  padding-bottom: 20px;
 `;
 
 export const Title = styled.Text`
@@ -78,5 +79,5 @@ export const LinkText = styled.Text`
 
 export const ListDeliveries = styled.FlatList.attrs({
   showsVerticalScrollIndicator: false,
-  contentContainerStyle: { padding: 30 },
+  // contentContainerStyle: { padding: 30 },
 })``;
