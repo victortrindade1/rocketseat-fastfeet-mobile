@@ -24,9 +24,14 @@ export default (signedIn = false) =>
               inactiveTintColor: '#999',
               style: {
                 backgroundColor: '#fff',
+                height: 70,
+                paddingTop: 12,
+                borderTopWidth: 0,
+                elevation: 8,
               },
               labelStyle: {
                 fontSize: 14,
+                paddingBottom: 12,
               },
             },
           },

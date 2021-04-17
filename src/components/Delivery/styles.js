@@ -9,9 +9,10 @@ export const Container = styled.View.attrs({
     width: 0,
     height: 1,
   },
-  shadowOpacity: 0.2,
-  shadowRadius: 1.41,
-  elevation: 2,
+  shadowOpacity: 0.22,
+  shadowRadius: 2.22,
+
+  elevation: 3,
   // ########### Shadow effects ###########
 })`
   background-color: #fff;
