@@ -12,7 +12,7 @@ import { createLetterAvatar } from '~/util/letterAvatar';
 
 function Avatar({ url, name, index }) {
   const letterAvatar = createLetterAvatar(name, index);
-  console.tron.log(url);
+
   return (
     <Container>
       {url ? (

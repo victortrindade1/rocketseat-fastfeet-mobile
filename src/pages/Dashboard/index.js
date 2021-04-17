@@ -1,7 +1,11 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { TouchableOpacity, StatusBar } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
+import { format, parseISO } from 'date-fns';
+import { Alert } from 'react-native';
+
+import api from '~/services/api';
 
 import { signOut } from '~/store/modules/auth/actions';
 
@@ -29,14 +33,43 @@ import {
 
 export default function Dashboard() {
   const user = useSelector(state => state.user);
-
+  // console.tron.log(user);
   const dispatch = useDispatch();
 
   function handleLogout() {
     dispatch(signOut());
   }
 
-  const data = [1, 2, 3, 4, 5];
+  const [deliveries, setDeliveries] = useState([]);
+
+  useEffect(() => {
+    async function loadDeliveries() {
+      try {
+        const response = await api.get(
+          `mobile/deliverymen/${user.profile.id}/deliveries`,
+        );
+
+        const data = response.data.items.map(delivery => ({
+          ...delivery,
+          start_date_formatted: delivery.start_date
+            ? format(parseISO(delivery?.start_date), 'dd/MM/yyyy')
+            : '--/--/--',
+          end_date_formatted: delivery.end_date
+            ? format(parseISO(delivery?.end_date), 'dd/MM/yyyy')
+            : '--/--/--',
+        }));
+
+        setDeliveries(data);
+      } catch (error) {
+        Alert.alert(
+          'Falha no carregamento dos dados',
+          'Ocorreu um erro inesperadíssississimo',
+        );
+      }
+    }
+
+    loadDeliveries();
+  }, []);
 
   return (
     <>
@@ -85,8 +118,8 @@ export default function Dashboard() {
           </HeaderBody>
 
           <ListDeliveries
-            data={data}
-            keyExtractor={item => String(item)}
+            data={deliveries}
+            keyExtractor={item => String(item.id)}
             renderItem={({ item }) => <Delivery data={item} />}
           />
         </DeliveriesContainer>

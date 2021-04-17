@@ -16,12 +16,17 @@ import {
   LinkDetailsText,
 } from './styles';
 
-const Delivery = () => {
+const Delivery = ({ data }) => {
+  // Coloca o zero se id for menor que 10
+  data.stringId = data.id <= 9 ? `0${data.id}` : data.id;
+
+  console.tron.log(data);
+
   return (
     <Container>
       <Title>
         <DeliveryIcon name={'local-shipping'} size={22} />
-        <TitleText>Encomenda 01</TitleText>
+        <TitleText>Encomenda {data.stringId}</TitleText>
       </Title>
 
       <TimelineContainer>
@@ -31,7 +36,7 @@ const Delivery = () => {
       <FooterContainer>
         <Div>
           <FooterTitle>Data</FooterTitle>
-          <FooterText>15/01/2020</FooterText>
+          <FooterText>{data.start_date_formatted}</FooterText>
         </Div>
         <Div>
           <FooterTitle>Cidade</FooterTitle>
