@@ -17,10 +17,7 @@ import {
 } from './styles';
 
 const Delivery = ({ data }) => {
-  // Coloca o zero se id for menor que 10
-  data.stringId = data.id <= 9 ? `0${data.id}` : data.id;
-
-  console.tron.log(data);
+  // console.tron.log(data);
 
   return (
     <Container>
@@ -40,7 +37,7 @@ const Delivery = ({ data }) => {
         </Div>
         <Div>
           <FooterTitle>Cidade</FooterTitle>
-          <FooterText>Rio do Sul</FooterText>
+          <FooterText>{data.recipient.city}</FooterText>
         </Div>
         <Div>
           <LinkDetails>

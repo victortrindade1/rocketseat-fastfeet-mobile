@@ -49,8 +49,12 @@ export default function Dashboard() {
           `mobile/deliverymen/${user.profile.id}/deliveries`,
         );
 
+        // Parsing data:
         const data = response.data.items.map(delivery => ({
           ...delivery,
+          // Coloca o zero se id for menor que 10
+          stringId: delivery.id <= 9 ? `0${delivery.id}` : delivery.id,
+          // Format dates to dd/mm/yyyy
           start_date_formatted: delivery.start_date
             ? format(parseISO(delivery?.start_date), 'dd/MM/yyyy')
             : '--/--/--',
