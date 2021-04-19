@@ -10,16 +10,16 @@ import {
 
 import { createLetterAvatar } from '~/util/letterAvatar';
 
-function Avatar({ url, name, index }) {
+function Avatar({ url, name, index, width = 68, textSize = 31 }) {
   const letterAvatar = createLetterAvatar(name, index);
 
   return (
-    <Container>
+    <Container width={width}>
       {url ? (
         <PhotoAvatar source={{ uri: url }} />
       ) : (
         <LetterAvatarContainer color={letterAvatar.color}>
-          <LetterAvatarText color={letterAvatar.color}>
+          <LetterAvatarText color={letterAvatar.color} textSize={textSize}>
             {letterAvatar.letters}
           </LetterAvatarText>
         </LetterAvatarContainer>

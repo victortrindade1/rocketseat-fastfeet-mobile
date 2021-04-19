@@ -2,10 +2,11 @@ import styled from 'styled-components/native';
 import { darken } from 'polished';
 
 export const Container = styled.View`
-  border-radius: 34px;
+  border-radius: ${props => props.width / 2}px;
   /* position: relative; */
-  width: 68px;
-  height: 68px;
+  /* width: 68px; */
+  width: ${props => props.width}px;
+  height: ${props => props.width}px;
   overflow: hidden;
 `;
 
@@ -23,7 +24,6 @@ export const LetterAvatarContainer = styled.View`
 
 export const LetterAvatarText = styled.Text`
   color: ${props => darken(0.3, props.color)};
-  /* line-height: 68px; */
   text-align: center;
-  font-size: 31px;
+  font-size: ${props => props.textSize}px;
 `;

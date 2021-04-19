@@ -92,7 +92,9 @@ export default function Dashboard() {
               }
               name={user.profile.name}
               index={0} // Não é lista
-              alt="Avatar"
+              // alt="Avatar"
+              width={68}
+              textSize={31}
             />
             <UserNameContainer>
               <WelcomeText>Bem-vindo de volta,</WelcomeText>

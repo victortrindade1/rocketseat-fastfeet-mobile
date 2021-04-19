@@ -1,17 +1,43 @@
 import styled from 'styled-components/native';
 
-export const Container = styled.View``;
+import Avatar from '~/components/Avatar';
+import Button from '~/components/Button';
 
-export const PhotoAvatar = styled.View``;
+export const ScrollContainer = styled.ScrollView`
+  background-color: #fff;
+`;
 
-export const ProfileContainer = styled.View``;
+export const Container = styled.SafeAreaView`
+  align-items: center;
+  padding-top: 83px;
+  flex: 1;
+  background-color: #fff;
+`;
 
-export const Row = styled.View``;
+export const UserAvatar = styled(Avatar)``;
 
-export const Label = styled.View``;
+export const ProfileContainer = styled.View`
+  padding-top: 40px;
+  width: 80%;
+`;
 
-export const LabelText = styled.Text``;
+export const Row = styled.View`
+  padding-top: 15px;
+`;
 
-export const ProfileText = styled.Text``;
+export const LabelText = styled.Text`
+  font-size: 12px;
+  color: #666;
+`;
 
-export const LogoutButton = styled.View``;
+export const ProfileText = styled.Text`
+  font-size: 22px;
+  color: #444;
+  font-weight: bold;
+`;
+
+export const LogoutButton = styled(Button)`
+  width: 80%;
+  background-color: #e74040;
+  margin: 30px 0px;
+`;
