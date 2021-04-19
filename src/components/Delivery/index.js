@@ -17,7 +17,9 @@ import {
 } from './styles';
 
 const Delivery = ({ data }) => {
-  // console.tron.log(data);
+  // const start = data.start_date ? true : false;
+  const start = !!data.start_date;
+  const finish = !!data.end_date;
 
   return (
     <Container>
@@ -27,7 +29,7 @@ const Delivery = ({ data }) => {
       </Title>
 
       <TimelineContainer>
-        <Timeline />
+        <Timeline waiting={true} start={start} finish={finish} />
       </TimelineContainer>
 
       <FooterContainer>

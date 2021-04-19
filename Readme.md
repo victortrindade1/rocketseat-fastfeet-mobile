@@ -1,3 +1,3 @@
 Onde estou:
 
-Pintar timeline com os dados da API
+Criar filtro de pendentes e entregues

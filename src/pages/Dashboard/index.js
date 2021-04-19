@@ -33,7 +33,7 @@ import {
 
 export default function Dashboard() {
   const user = useSelector(state => state.user);
-  // console.tron.log(user);
+
   const dispatch = useDispatch();
 
   function handleLogout() {

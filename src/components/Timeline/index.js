@@ -10,14 +10,14 @@ import {
   StatusLabel,
 } from './styles';
 
-const Timeline = () => {
+const Timeline = ({ waiting, start, finish }) => {
   return (
     <Container>
       <DivTimeLine>
         <Line />
-        <Status checked={true} />
-        <Status checked={true} />
-        <Status checked={false} />
+        <Status checked={waiting} />
+        <Status checked={start} />
+        <Status checked={finish} />
       </DivTimeLine>
 
       <DivLabel>
