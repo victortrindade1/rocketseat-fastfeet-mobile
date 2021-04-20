@@ -1,5 +1,6 @@
 import styled from 'styled-components/native';
 import Avatar from '~/components/Avatar';
+import { colors } from '~/styles/colors';
 
 export const Container = styled.SafeAreaView`
   flex: 1;
@@ -74,7 +75,8 @@ export const Link = styled.TouchableOpacity`
 `;
 
 export const LinkText = styled.Text`
-  color: #999;
+  color: ${props => (props.activated ? colors.primary : '#999')};
+  text-decoration: ${props => (props.activated ? 'underline' : 'none')}
   font-weight: bold;
   font-size: 12px;
 `;

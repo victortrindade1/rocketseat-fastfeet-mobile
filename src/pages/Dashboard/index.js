@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { TouchableOpacity, StatusBar } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
@@ -32,6 +32,9 @@ import {
 } from './styles';
 
 export default function Dashboard() {
+  const [deliveries, setDeliveries] = useState([]);
+  const [filter, setFilter] = useState('pending');
+
   const user = useSelector(state => state.user);
 
   const dispatch = useDispatch();
@@ -40,28 +43,39 @@ export default function Dashboard() {
     dispatch(signOut());
   }
 
-  const [deliveries, setDeliveries] = useState([]);
+  // const handleFilter = useCallback(status => setFilter(status));
+  const handleFilter = status => setFilter(status);
+
+  const parseDeliveries = useCallback(data => {
+    return data.map(delivery => {
+      delivery.stringId = delivery.id <= 9 ? `0${delivery.id}` : delivery.id;
+
+      delivery.start_date_formatted = delivery.start_date
+        ? format(parseISO(delivery?.start_date), 'dd/MM/yyyy')
+        : '--/--/--';
+
+      delivery.end_date_formatted = delivery.end_date
+        ? format(parseISO(delivery?.end_date), 'dd/MM/yyyy')
+        : '--/--/--';
+
+      return delivery;
+    });
+  }, []);
 
   useEffect(() => {
     async function loadDeliveries() {
       try {
         const response = await api.get(
           `mobile/deliverymen/${user.profile.id}/deliveries`,
+          {
+            params: {
+              q: filter,
+            },
+          },
         );
 
         // Parsing data:
-        const data = response.data.items.map(delivery => ({
-          ...delivery,
-          // Coloca o zero se id for menor que 10
-          stringId: delivery.id <= 9 ? `0${delivery.id}` : delivery.id,
-          // Format dates to dd/mm/yyyy
-          start_date_formatted: delivery.start_date
-            ? format(parseISO(delivery?.start_date), 'dd/MM/yyyy')
-            : '--/--/--',
-          end_date_formatted: delivery.end_date
-            ? format(parseISO(delivery?.end_date), 'dd/MM/yyyy')
-            : '--/--/--',
-        }));
+        const data = parseDeliveries(response.data.items);
 
         setDeliveries(data);
       } catch (error) {
@@ -73,7 +87,7 @@ export default function Dashboard() {
     }
 
     loadDeliveries();
-  }, []);
+  }, [filter]);
 
   return (
     <>
@@ -114,11 +128,13 @@ export default function Dashboard() {
             <Title>Entregas</Title>
 
             <FilterContainer>
-              <Link onPress={() => navigation.navigate('Pendentes')}>
-                <LinkText>Pendentes</LinkText>
+              <Link onPress={() => handleFilter('pending')}>
+                <LinkText activated={filter === 'pending'}>Pendentes</LinkText>
               </Link>
-              <Link onPress={() => navigation.navigate('Entregues')}>
-                <LinkText>Entregues</LinkText>
+              <Link onPress={() => handleFilter('delivered')}>
+                <LinkText activated={filter === 'delivered'}>
+                  Entregues
+                </LinkText>
               </Link>
             </FilterContainer>
           </HeaderBody>
