@@ -34,16 +34,16 @@ import {
 export default function Dashboard() {
   const [deliveries, setDeliveries] = useState([]);
   const [filter, setFilter] = useState('pending');
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
 
   const user = useSelector(state => state.user);
 
   const dispatch = useDispatch();
 
-  function handleLogout() {
-    dispatch(signOut());
-  }
+  const handleLogout = useCallback(() => dispatch(signOut()), []);
 
-  // const handleFilter = useCallback(status => setFilter(status));
+  // O React garante q o useState é seguro sem precisar de useCallback
   const handleFilter = status => setFilter(status);
 
   const parseDeliveries = useCallback(data => {
@@ -62,30 +62,69 @@ export default function Dashboard() {
     });
   }, []);
 
-  useEffect(() => {
-    async function loadDeliveries() {
-      try {
-        const response = await api.get(
-          `mobile/deliverymen/${user.profile.id}/deliveries`,
-          {
-            params: {
-              q: filter,
-            },
-          },
-        );
+  const loadMoreDeliveries = useCallback(async () => {
+    // Não tem mais deliveries
+    if (!hasMore) return;
 
+    try {
+      const response = await api.get(
+        `mobile/deliverymen/${user.profile.id}/deliveries`,
+        {
+          params: {
+            q: filter,
+            page: page + 1,
+          },
+        },
+      );
+      console.tron.log(response);
+      if (response.data.items.length > 0) {
         // Parsing data:
         const data = parseDeliveries(response.data.items);
-
-        setDeliveries(data);
-      } catch (error) {
-        Alert.alert(
-          'Falha no carregamento dos dados',
-          'Ocorreu um erro inesperadíssississimo',
-        );
+        // setState(valor anterior, próximo valor)
+        setDeliveries([...deliveries, ...data]);
+        setPage(page + 1);
+      } else {
+        setHasMore(false);
       }
+    } catch (error) {
+      Alert.alert(
+        'Falha na requisição',
+        'Não foi possível buscar as entregas, por favor tente mais tarde.',
+      );
     }
+  }, [hasMore, user, filter, api, page, deliveries]);
 
+  const loadDeliveries = useCallback(async () => {
+    console.tron.log('to em load. Este é o hasMore: ', hasMore);
+    setDeliveries([]);
+    // setLoading(true);
+    setPage(1);
+    setHasMore(true);
+
+    try {
+      const response = await api.get(
+        `mobile/deliverymen/${user.profile.id}/deliveries`,
+        {
+          params: {
+            q: filter,
+            page,
+          },
+        },
+      );
+
+      // Parsing data:
+      const data = parseDeliveries(response.data.items);
+
+      setDeliveries(data);
+    } catch (error) {
+      Alert.alert(
+        'Falha no carregamento dos dados',
+        'Ocorreu um erro inesperadíssississimo',
+      );
+    }
+  }, [api, user, filter]);
+
+  useEffect(() => {
     loadDeliveries();
   }, [filter]);
 
@@ -142,6 +181,8 @@ export default function Dashboard() {
           <ListDeliveries
             data={deliveries}
             keyExtractor={item => String(item.id)}
+            onEndReachedThreshold={0.5}
+            onEndReached={loadMoreDeliveries}
             renderItem={({ item }) => <Delivery data={item} />}
           />
         </DeliveriesContainer>
