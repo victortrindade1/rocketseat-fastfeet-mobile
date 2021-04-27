@@ -2,4 +2,5 @@ Onde estou:
 
 Scroll infinito do filtro
 
-Tá funcionando parcialmente. Dá umas duplicadas.
+Consulta com scroll infinito funciona perfeitamente. Falta agora fazer o loading
+e a tela de lista vazia.

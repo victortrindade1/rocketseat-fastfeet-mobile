@@ -36,6 +36,7 @@ export default function Dashboard() {
   const [filter, setFilter] = useState('pending');
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
 
   const user = useSelector(state => state.user);
 
@@ -61,6 +62,40 @@ export default function Dashboard() {
       return delivery;
     });
   }, []);
+
+  const handleRefresh = useCallback(async () => {
+    setHasMore(false);
+    setRefreshing(true);
+    setDeliveries([]);
+    setPage(1);
+
+    // Por mais idêntico q seja o código com o loadDeliveries(), tenho q fazer
+    // separado pq senão zera o filtro pro estado inicial 'pending'
+    try {
+      const response = await api.get(
+        `mobile/deliverymen/${user.profile.id}/deliveries`,
+        {
+          params: {
+            q: filter,
+            page,
+          },
+        },
+      );
+
+      // Parsing data:
+      const data = parseDeliveries(response.data.items);
+
+      setDeliveries(data);
+    } catch (error) {
+      Alert.alert(
+        'Falha na requisição',
+        'Não foi possível buscar as entregas, por favor tente mais tarde.',
+      );
+    }
+
+    setRefreshing(false);
+    setHasMore(true);
+  }, [api, user, filter]);
 
   const loadMoreDeliveries = useCallback(async () => {
     // Não tem mais deliveries
@@ -95,11 +130,11 @@ export default function Dashboard() {
   }, [hasMore, user, filter, api, page, deliveries]);
 
   const loadDeliveries = useCallback(async () => {
-    console.tron.log('to em load. Este é o hasMore: ', hasMore);
+    console.tron.log('Filter no loadDeliveries: ', filter);
+    // console.tron.log('to em load. Este é o hasMore: ', hasMore);
     setDeliveries([]);
     // setLoading(true);
     setPage(1);
-    setHasMore(true);
 
     try {
       const response = await api.get(
@@ -167,6 +202,7 @@ export default function Dashboard() {
             <Title>Entregas</Title>
 
             <FilterContainer>
+              {/* <Link onPress={() => handleFilter('pending')}> */}
               <Link onPress={() => handleFilter('pending')}>
                 <LinkText activated={filter === 'pending'}>Pendentes</LinkText>
               </Link>
@@ -183,6 +219,8 @@ export default function Dashboard() {
             keyExtractor={item => String(item.id)}
             onEndReachedThreshold={0.5}
             onEndReached={loadMoreDeliveries}
+            refreshing={refreshing}
+            onRefresh={handleRefresh}
             renderItem={({ item }) => <Delivery data={item} />}
           />
         </DeliveriesContainer>
