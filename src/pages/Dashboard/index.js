@@ -5,6 +5,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { format, parseISO } from 'date-fns';
 import { Alert } from 'react-native';
 
+import noVisibility from '~/assets/visibility-off.json';
+
 import api from '~/services/api';
 
 import { signOut } from '~/store/modules/auth/actions';
@@ -29,6 +31,9 @@ import {
   Link,
   LinkText,
   ListDeliveries,
+  EmptyContainer,
+  EmptyText,
+  Lottie,
 } from './styles';
 
 export default function Dashboard() {
@@ -82,10 +87,7 @@ export default function Dashboard() {
         },
       );
 
-      // Parsing data:
-      const data = parseDeliveries(response.data.items);
-
-      setDeliveries(data);
+      setDeliveries(parseDeliveries(response.data.items));
     } catch (error) {
       Alert.alert(
         'Falha na requisição',
@@ -130,8 +132,6 @@ export default function Dashboard() {
   }, [hasMore, user, filter, api, page, deliveries]);
 
   const loadDeliveries = useCallback(async () => {
-    console.tron.log('Filter no loadDeliveries: ', filter);
-    // console.tron.log('to em load. Este é o hasMore: ', hasMore);
     setDeliveries([]);
     // setLoading(true);
     setPage(1);
@@ -147,10 +147,7 @@ export default function Dashboard() {
         },
       );
 
-      // Parsing data:
-      const data = parseDeliveries(response.data.items);
-
-      setDeliveries(data);
+      setDeliveries(parseDeliveries(response.data.items));
     } catch (error) {
       Alert.alert(
         'Falha no carregamento dos dados',
@@ -214,15 +211,22 @@ export default function Dashboard() {
             </FilterContainer>
           </HeaderBody>
 
-          <ListDeliveries
-            data={deliveries}
-            keyExtractor={item => String(item.id)}
-            onEndReachedThreshold={0.5}
-            onEndReached={loadMoreDeliveries}
-            refreshing={refreshing}
-            onRefresh={handleRefresh}
-            renderItem={({ item }) => <Delivery data={item} />}
-          />
+          {deliveries.length > 0 || refreshing ? (
+            <ListDeliveries
+              data={deliveries}
+              keyExtractor={item => String(item.id)}
+              onEndReachedThreshold={0.5}
+              onEndReached={loadMoreDeliveries}
+              refreshing={refreshing}
+              onRefresh={handleRefresh}
+              renderItem={({ item }) => <Delivery data={item} />}
+            />
+          ) : (
+            <EmptyContainer>
+              <Lottie source={noVisibility} autoPlay loop />
+              <EmptyText>Não existem entregas!</EmptyText>
+            </EmptyContainer>
+          )}
         </DeliveriesContainer>
       </Container>
     </>

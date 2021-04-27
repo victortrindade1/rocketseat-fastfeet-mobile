@@ -1,6 +1,7 @@
 import styled from 'styled-components/native';
 import Avatar from '~/components/Avatar';
 import { colors } from '~/styles/colors';
+import LottieView from 'lottie-react-native';
 
 export const Container = styled.SafeAreaView`
   flex: 1;
@@ -85,3 +86,21 @@ export const ListDeliveries = styled.FlatList.attrs({
   showsVerticalScrollIndicator: false,
   // contentContainerStyle: { padding: 30 },
 })``;
+
+export const EmptyContainer = styled.View`
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const EmptyText = styled.Text`
+  color: #ddd;
+  font-size: 14px;
+  font-weight: bold;
+  margin-top: 5px;
+`;
+
+export const Lottie = styled(LottieView)`
+  width: 80px;
+  height: 80px;
+`;
