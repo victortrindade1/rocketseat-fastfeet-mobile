@@ -98,8 +98,5 @@ export default function Dashboard() {
 }
 
 Dashboard.navigationOptions = {
-  tabBarLabel: 'Entregas',
-  tabBarIcon: ({ tintColor }) => (
-    <Icon name="reorder" size={20} color={tintColor} />
-  ),
+  headerShown: false,
 };

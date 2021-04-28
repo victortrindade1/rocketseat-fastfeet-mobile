@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { NavigationContext } from 'react-navigation';
 
 import Timeline from '~/components/Timeline';
 
@@ -17,6 +18,8 @@ import {
 } from './styles';
 
 const Delivery = ({ data }) => {
+  const navigation = useContext(NavigationContext);
+
   // const start = data.start_date ? true : false;
   const start = !!data.start_date;
   const finish = !!data.end_date;
@@ -42,7 +45,11 @@ const Delivery = ({ data }) => {
           <FooterText>{data.recipient.city}</FooterText>
         </Div>
         <Div>
-          <LinkDetails>
+          <LinkDetails
+            onPress={() => {
+              navigation.navigate('DeliveryDetails');
+            }}
+          >
             <LinkDetailsText>Ver detalhes</LinkDetailsText>
           </LinkDetails>
         </Div>
