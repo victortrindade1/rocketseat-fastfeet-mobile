@@ -1,6 +1,15 @@
-Onde estou:
+# O q fiz:
 
-Scroll infinito do filtro
+Scroll infinito da lista
 
-Consulta com scroll infinito funciona perfeitamente. Falta agora fazer o loading
-e a tela de lista vazia.
+Terminei a lista. Possui:
+
+- Scroll infinito
+- refresh
+- loading geral
+- loading do scroll infinito
+- Tela de lista vazia
+
+# O q vou fazer agora:
+
+Ficou grande o código da lista. Vou desmembrar da page Dashboard.

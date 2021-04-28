@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { TouchableOpacity, StatusBar } from 'react-native';
+import { TouchableOpacity, StatusBar, RefreshControl } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { format, parseISO } from 'date-fns';
 import { Alert } from 'react-native';
@@ -16,6 +16,7 @@ import Delivery from '~/components/Delivery';
 import { colors } from '~/styles/colors';
 
 import {
+  StatusBarStyled,
   Container,
   HeaderContainer,
   UserContainer,
@@ -34,6 +35,11 @@ import {
   EmptyContainer,
   EmptyText,
   Lottie,
+  Loading,
+  LoadingMoreContainer,
+  LoadingMoreSpinner,
+  LoadingMoreText,
+  Refresh,
 } from './styles';
 
 export default function Dashboard() {
@@ -42,6 +48,8 @@ export default function Dashboard() {
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [loadingMore, setLoadingMore] = useState(false);
 
   const user = useSelector(state => state.user);
 
@@ -50,7 +58,10 @@ export default function Dashboard() {
   const handleLogout = useCallback(() => dispatch(signOut()), []);
 
   // O React garante q o useState é seguro sem precisar de useCallback
-  const handleFilter = status => setFilter(status);
+  const handleFilter = status => {
+    setPage(1);
+    setFilter(status);
+  };
 
   const parseDeliveries = useCallback(data => {
     return data.map(delivery => {
@@ -100,8 +111,15 @@ export default function Dashboard() {
   }, [api, user, filter]);
 
   const loadMoreDeliveries = useCallback(async () => {
-    // Não tem mais deliveries
-    if (!hasMore) return;
+    /**
+     * Não faz consulta se não tiver mais.
+     * Não faz consulta se já estiver fazendo consulta. Isto pq a função roda
+     * sempre q o usuário chega no limite do parâmetro onEndReachedThreshold do
+     * flatlist
+     */
+    if (loadingMore || !hasMore) return;
+
+    setLoadingMore(true);
 
     try {
       const response = await api.get(
@@ -113,7 +131,6 @@ export default function Dashboard() {
           },
         },
       );
-      console.tron.log(response);
       if (response.data.items.length > 0) {
         // Parsing data:
         const data = parseDeliveries(response.data.items);
@@ -129,11 +146,13 @@ export default function Dashboard() {
         'Não foi possível buscar as entregas, por favor tente mais tarde.',
       );
     }
-  }, [hasMore, user, filter, api, page, deliveries]);
+
+    setLoadingMore(false);
+  }, [hasMore, user, filter, api, page, deliveries, loadingMore]);
 
   const loadDeliveries = useCallback(async () => {
     setDeliveries([]);
-    // setLoading(true);
+    setLoading(true);
     setPage(1);
 
     try {
@@ -154,7 +173,9 @@ export default function Dashboard() {
         'Ocorreu um erro inesperadíssississimo',
       );
     }
-  }, [api, user, filter]);
+
+    setLoading(false);
+  }, [api, user, filter, deliveries]);
 
   useEffect(() => {
     loadDeliveries();
@@ -162,7 +183,7 @@ export default function Dashboard() {
 
   return (
     <>
-      <StatusBar barStyle={'dark-content'} backgroundColor={'#fff'} />
+      <StatusBarStyled barStyle={'dark-content'} />
 
       <Container>
         <HeaderContainer>
@@ -211,21 +232,41 @@ export default function Dashboard() {
             </FilterContainer>
           </HeaderBody>
 
-          {deliveries.length > 0 || refreshing ? (
-            <ListDeliveries
-              data={deliveries}
-              keyExtractor={item => String(item.id)}
-              onEndReachedThreshold={0.5}
-              onEndReached={loadMoreDeliveries}
-              refreshing={refreshing}
-              onRefresh={handleRefresh}
-              renderItem={({ item }) => <Delivery data={item} />}
-            />
+          {loading ? (
+            <Loading />
           ) : (
-            <EmptyContainer>
-              <Lottie source={noVisibility} autoPlay loop />
-              <EmptyText>Não existem entregas!</EmptyText>
-            </EmptyContainer>
+            <>
+              {deliveries.length > 0 ? (
+                <>
+                  <ListDeliveries
+                    data={deliveries}
+                    keyExtractor={item => String(item.id)}
+                    onEndReachedThreshold={0.5}
+                    onEndReached={loadMoreDeliveries}
+                    refreshControl={
+                      <Refresh
+                        refreshing={refreshing}
+                        onRefresh={handleRefresh}
+                      />
+                    }
+                    renderItem={({ item }) => <Delivery data={item} />}
+                    ListFooterComponent={
+                      hasMore && (
+                        <LoadingMoreContainer>
+                          <LoadingMoreSpinner />
+                          <LoadingMoreText>Carregando...</LoadingMoreText>
+                        </LoadingMoreContainer>
+                      )
+                    }
+                  />
+                </>
+              ) : (
+                <EmptyContainer>
+                  <Lottie source={noVisibility} autoPlay loop />
+                  <EmptyText>Não existem entregas!</EmptyText>
+                </EmptyContainer>
+              )}
+            </>
           )}
         </DeliveriesContainer>
       </Container>

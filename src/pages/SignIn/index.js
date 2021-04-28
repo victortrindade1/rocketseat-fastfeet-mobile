@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react';
+import { Alert } from 'react-native';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { signInRequest } from '~/store/modules/auth/actions';
+import { signFailure } from '~/store/modules/auth/actions';
 
 import DismissKeyboard from '~/util/DismissKeyboard';
 
@@ -45,7 +47,15 @@ export default function SignIn() {
   const watchId = watch('login');
 
   const onSubmit = () => {
-    dispatch(signInRequest(watchId));
+    try {
+      dispatch(signInRequest(watchId));
+    } catch (error) {
+      Alert.alert(
+        'Falha no login',
+        'Não foi possível efetuar o login, por favor tente mais tarde.',
+      );
+      dispatch(signFailure);
+    }
   };
 
   useEffect(() => {
