@@ -2,12 +2,18 @@ import React from 'react';
 import { TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
+import Background from '~/components/Background';
+
 import { Container } from './styles';
 
 const DeliveryDetails = props => {
   console.tron.log('Delivery Details - props: ', props);
 
-  return <Container />;
+  return (
+    <Background>
+      <Container />
+    </Background>
+  );
 };
 
 export default DeliveryDetails;

@@ -29,6 +29,7 @@ export default (signedIn = false) =>
                 },
                 {
                   defaultNavigationOptions: ({ navigation }) => ({
+                    mode: 'card',
                     headerTransparent: true,
                     headerTintColor: '#fff',
                     headerLeftContainerStyle: {
