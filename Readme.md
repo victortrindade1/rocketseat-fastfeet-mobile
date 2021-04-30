@@ -1,3 +1,3 @@
 # O q vou fazer agora:
 
-Vou fazer submenu de DeliveryDetails
+Rotas pro submenu do DeliveryDetails page.

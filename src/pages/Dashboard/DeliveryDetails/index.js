@@ -12,6 +12,10 @@ import {
   RowText,
   Div,
   SubMenuContainer,
+  SubMenuButton,
+  SubMenuButtonIcon,
+  SubMenuButtonText,
+  Separator,
 } from './styles';
 
 const DeliveryDetails = ({ navigation }) => {
@@ -74,7 +78,22 @@ const DeliveryDetails = ({ navigation }) => {
         </Div>
       </Container>
 
-      <SubMenuContainer />
+      <SubMenuContainer>
+        <SubMenuButton>
+          <SubMenuButtonIcon type={'danger'} name={'highlight-off'} />
+          <SubMenuButtonText>Informar{'\n'}Problema</SubMenuButtonText>
+        </SubMenuButton>
+        <Separator />
+        <SubMenuButton>
+          <SubMenuButtonIcon type={'warn'} name={'info-outline'} />
+          <SubMenuButtonText>Visualizar{'\n'}Problemas</SubMenuButtonText>
+        </SubMenuButton>
+        <Separator />
+        <SubMenuButton>
+          <SubMenuButtonIcon type={'ok'} name={'check-circle-outline'} />
+          <SubMenuButtonText>Confirmar{'\n'}Entrega</SubMenuButtonText>
+        </SubMenuButton>
+      </SubMenuContainer>
     </Background>
   );
 };

@@ -3,6 +3,7 @@ export const colors = {
   danger: '#E740ff',
   warn: '#E7BA40',
   red: '#e74040',
+  ok: '#228B22',
 };
 
 export const letterAvatar = [
