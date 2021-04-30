@@ -29,13 +29,14 @@ export default (signedIn = false) =>
                 },
                 {
                   defaultNavigationOptions: ({ navigation }) => ({
-                    mode: 'card',
+                    // mode: 'card',
                     headerTransparent: true,
                     headerTintColor: '#fff',
                     headerLeftContainerStyle: {
-                      marginLeft: 15,
                       paddingTop: 20,
+                      paddingLeft: 15,
                     },
+                    headerTitleAlign: 'center',
                     headerTitleStyle: {
                       paddingTop: 20,
                     },

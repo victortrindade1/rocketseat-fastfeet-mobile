@@ -1,11 +1,11 @@
 import React from 'react';
-import { Wrapper, Header, Body } from './styles';
+import { Wrapper, Header, ScrollContainer } from './styles';
 
 const LayoutDefault = ({ children }) => {
   return (
     <Wrapper>
       <Header />
-      <Body>{children}</Body>
+      <ScrollContainer>{children}</ScrollContainer>
     </Wrapper>
   );
 };

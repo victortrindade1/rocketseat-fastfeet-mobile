@@ -47,7 +47,7 @@ const Delivery = ({ data }) => {
         <Div>
           <LinkDetails
             onPress={() => {
-              navigation.navigate('DeliveryDetails');
+              navigation.navigate('DeliveryDetails', data);
             }}
           >
             <LinkDetailsText>Ver detalhes</LinkDetailsText>

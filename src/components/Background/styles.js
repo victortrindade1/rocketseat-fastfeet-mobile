@@ -1,7 +1,7 @@
 import styled from 'styled-components/native';
 import { colors } from '~/styles/colors';
 
-export const Wrapper = styled.View`
+export const Wrapper = styled.SafeAreaView`
   flex: 1;
   background-color: #fff;
   position: relative;
@@ -14,9 +14,9 @@ export const Header = styled.View`
   width: 100%;
 `;
 
-export const Body = styled.View`
+export const ScrollContainer = styled.ScrollView.attrs({})`
+  width: 90%;
   position: absolute;
   top: 20%;
-  width: 80%;
-  /* background-color: #fff; */
+  bottom: 0;
 `;
