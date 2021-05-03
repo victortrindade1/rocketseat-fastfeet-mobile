@@ -3,13 +3,13 @@ import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { createStackNavigator } from 'react-navigation-stack';
 import { TouchableOpacity } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import SignIn from './pages/SignIn';
 import Dashboard from './pages/Dashboard';
 import DeliveryDetails from './pages/Dashboard/DeliveryDetails';
 import Profile from './pages/Profile';
-
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import AddProblem from './pages/Dashboard/AddProblem';
 
 import { colors } from '~/styles/colors';
 
@@ -25,6 +25,7 @@ export default (signedIn = false) =>
                 {
                   Dashboard,
                   DeliveryDetails,
+                  AddProblem,
                   // AnotherPage,
                 },
                 {

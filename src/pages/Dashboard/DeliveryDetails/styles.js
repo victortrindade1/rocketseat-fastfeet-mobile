@@ -97,6 +97,7 @@ export const SubMenuButtonIcon = styled(Icon).attrs({
 
 export const SubMenuButtonText = styled.Text`
   text-align: center;
+  color: #999;
 `;
 
 export const Separator = styled.View`

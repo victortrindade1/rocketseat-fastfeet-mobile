@@ -3,8 +3,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import { colors } from '~/styles/colors';
 
 export const Container = styled.View`
-  padding: 0 25px;
-  height: 45px;
+  padding: 0px 20px;
   background: #fff;
   border-color: ${({ errorStyle }) => (errorStyle ? colors.danger : '#ddd')};
   border-width: 1px;
@@ -16,6 +15,7 @@ export const Container = styled.View`
 
 export const TInput = styled.TextInput.attrs({
   placeholderTextColor: '#999',
+  textAlignVertical: 'top',
 })`
   color: #999;
   font-size: 16px;
