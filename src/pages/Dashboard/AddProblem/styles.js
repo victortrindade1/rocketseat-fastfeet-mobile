@@ -13,3 +13,14 @@ export const SendButton = styled(Button)`
   background-color: ${colors.primary};
   margin-top: 20px;
 `;
+
+export const ContadorContainer = styled.View`
+  position: absolute;
+  top: 8px;
+  right: 8px;
+`;
+
+export const Contador = styled.Text`
+  color: #999;
+  font-size: 12px;
+`;

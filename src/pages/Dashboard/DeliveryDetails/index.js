@@ -81,7 +81,7 @@ const DeliveryDetails = ({ navigation }) => {
       <SubMenuContainer>
         <SubMenuButton
           onPress={() => {
-            navigation.navigate('AddProblem');
+            navigation.navigate('AddProblem', delivery.id);
           }}
         >
           <SubMenuButtonIcon type={'danger'} name={'highlight-off'} />

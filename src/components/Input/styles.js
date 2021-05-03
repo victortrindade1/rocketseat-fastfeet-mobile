@@ -26,7 +26,8 @@ export const InputIcon = styled(Icon)`
 `;
 
 export const ErrorMessage = styled.Text`
-  margin-top: -10px;
+  /* margin-top: -10px; */
   margin-bottom: 20px;
   color: ${colors.danger};
+  font-weight: bold;
 `;
