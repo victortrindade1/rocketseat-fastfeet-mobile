@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import { Alert } from 'react-native';
 import Toast from 'react-native-simple-toast';
+import { StackActions, NavigationActions } from 'react-navigation';
 
 import Background from '~/components/Background';
 
@@ -12,6 +13,8 @@ import api from '~/services/api';
 import { TInput, SendButton, ContadorContainer, Contador } from './styles';
 
 const AddProblem = ({ navigation }) => {
+  const [loading, setLoading] = useState(false);
+
   const validationSchema = Yup.object().shape({
     problemTextInput: Yup.string()
       .min(3, 'Mensagem vazia!')
@@ -33,8 +36,18 @@ const AddProblem = ({ navigation }) => {
 
   const char = watch('problemTextInput');
 
+  const navigationReset = () => {
+    const resetAction = StackActions.reset({
+      index: 0,
+      actions: [NavigationActions.navigate({ routeName: 'Dashboard' })],
+    });
+    navigation.dispatch(resetAction);
+  };
+
   const onSubmit = async () => {
     try {
+      setLoading(true);
+
       const problemText = getValues('problemTextInput');
 
       const deliveryId = navigation.state.params;
@@ -44,16 +57,17 @@ const AddProblem = ({ navigation }) => {
         delivery_id: deliveryId,
       });
 
-      // Mostrar toast de OK
-      // Zerar navigation stack
-      // Direcionar pro dashboard
+      Toast.showWithGravity('Enviado com sucesso!', Toast.LONG, Toast.TOP);
 
-      Toast.show('teste');
+      setLoading(false);
+
+      navigationReset();
     } catch (error) {
       Alert.alert(
         'Falha no envio',
         'Não foi possível enviar o problema, por favor tente mais tarde.',
       );
+      setLoading(false);
     }
   };
 
@@ -74,7 +88,9 @@ const AddProblem = ({ navigation }) => {
         // onSubmitEditing={handleSubmit(onSubmit)}
       />
 
-      <SendButton onPress={handleSubmit(onSubmit)}>Enviar</SendButton>
+      <SendButton onPress={handleSubmit(onSubmit)} loading={loading}>
+        Enviar
+      </SendButton>
 
       <ContadorContainer>
         <Contador>{String(char).length} / 500</Contador>
