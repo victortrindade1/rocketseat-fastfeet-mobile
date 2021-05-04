@@ -1,17 +1,28 @@
 import React from 'react';
-import { StatusBarStyled, Wrapper, Header, ScrollContainer } from './styles';
+import { View } from 'react-native';
+import {
+  StatusBarStyled,
+  Wrapper,
+  Header,
+  Container,
+  ScrollContainer,
+} from './styles';
 
-const LayoutDefault = ({ children }) => {
+const Background = ({ children, isFlatlist = false }) => {
   return (
     <>
       <StatusBarStyled barStyle={'light-content'} />
 
       <Wrapper>
         <Header />
-        <ScrollContainer>{children}</ScrollContainer>
+        {isFlatlist ? (
+          <Container>{children}</Container>
+        ) : (
+          <ScrollContainer>{children}</ScrollContainer>
+        )}
       </Wrapper>
     </>
   );
 };
 
-export default LayoutDefault;
+export default Background;

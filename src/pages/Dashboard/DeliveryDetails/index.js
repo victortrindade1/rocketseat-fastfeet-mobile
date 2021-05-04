@@ -88,7 +88,14 @@ const DeliveryDetails = ({ navigation }) => {
           <SubMenuButtonText>Informar{'\n'}Problema</SubMenuButtonText>
         </SubMenuButton>
         <Separator />
-        <SubMenuButton>
+        <SubMenuButton
+          onPress={() => {
+            navigation.navigate('ShowProblems', {
+              id: delivery.id,
+              stringId: delivery.stringId,
+            });
+          }}
+        >
           <SubMenuButtonIcon type={'warn'} name={'info-outline'} />
           <SubMenuButtonText>Visualizar{'\n'}Problemas</SubMenuButtonText>
         </SubMenuButton>

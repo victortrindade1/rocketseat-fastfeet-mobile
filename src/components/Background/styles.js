@@ -18,6 +18,13 @@ export const Header = styled.View`
   width: 100%;
 `;
 
+export const Container = styled.View`
+  width: 90%;
+  position: absolute;
+  top: 20%;
+  bottom: 0;
+`;
+
 export const ScrollContainer = styled.ScrollView.attrs({
   showsVerticalScrollIndicator: false,
   showsHorizontalScrollIndicator: false,

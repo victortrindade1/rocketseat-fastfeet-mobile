@@ -10,6 +10,7 @@ import Dashboard from './pages/Dashboard';
 import DeliveryDetails from './pages/Dashboard/DeliveryDetails';
 import Profile from './pages/Profile';
 import AddProblem from './pages/Dashboard/AddProblem';
+import ShowProblems from './pages/Dashboard/ShowProblems';
 
 import { colors } from '~/styles/colors';
 
@@ -26,6 +27,7 @@ export default (signedIn = false) =>
                   Dashboard,
                   DeliveryDetails,
                   AddProblem,
+                  ShowProblems,
                   // AnotherPage,
                 },
                 {

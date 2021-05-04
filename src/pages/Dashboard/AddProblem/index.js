@@ -77,7 +77,7 @@ const AddProblem = ({ navigation }) => {
   }, []);
 
   return (
-    <Background>
+    <Background isFlatlist={false}>
       <TInput
         placeholder="Inclua aqui o problema que ocorreu na entrega."
         control={control}
