@@ -1,4 +1,8 @@
-import React from 'react';
+import React, { useEffect, useCallback, useState } from 'react';
+import { format, parseISO } from 'date-fns';
+import { Alert } from 'react-native';
+
+import api from '~/services/api';
 
 import Background from '~/components/Background';
 
@@ -7,27 +11,47 @@ import {
   Title,
   ListProblems,
   ProblemContainer,
+  MessageContainer,
   Message,
+  DateContainer,
   Date,
 } from './styles';
 
-const data = [
-  {
-    id: 1,
-    message: 'Destinatário ausente',
-    date: '14/01/2020',
-  },
-  {
-    id: 2,
-    message: 'Destinatário ausente',
-    date: '15/01/2020',
-  },
-];
-
-// * Aqui vou fazer request pra api a partir do delivery id q foi passado no store do navigation
 const ShowProblems = ({ navigation }) => {
   const { stringId } = navigation.state.params;
   const { id } = navigation.state.params;
+
+  const [problems, setProblems] = useState([]);
+
+  const parseResponse = useCallback(data => {
+    return data.map(item => {
+      item.date = format(parseISO(item.created_at), 'dd/MM/yyyy');
+
+      return item;
+    });
+  }, []);
+
+  const loadProblems = useCallback(async () => {
+    try {
+      const response = await api.get(`delivery/${id}/problems`);
+
+      if (response.data.length > 0) {
+        // Parsing data:
+        const data = parseResponse(response.data);
+
+        setProblems(data);
+      }
+    } catch (error) {
+      Alert.alert(
+        'Falha no carregamento dos dados',
+        'Não foi possível carregar os problemas.',
+      );
+    }
+  }, [api, id]);
+
+  useEffect(() => {
+    loadProblems();
+  }, []);
 
   return (
     <Background isFlatlist={true}>
@@ -37,11 +61,16 @@ const ShowProblems = ({ navigation }) => {
 
       <ListProblems
         keyExtractor={item => String(item.id)}
-        data={data}
+        data={problems}
         renderItem={({ item }) => (
           <ProblemContainer>
-            <Message>{item.message}</Message>
-            <Date>{item.date}</Date>
+            <MessageContainer>
+              <Message>{item.description}</Message>
+            </MessageContainer>
+
+            <DateContainer>
+              <Date>{item.date}</Date>
+            </DateContainer>
           </ProblemContainer>
         )}
       />

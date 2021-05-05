@@ -2,6 +2,6 @@
 
 Page ShowProblems.
 
-- Conectar com api
+- Conectar com api: OK
 - Fazer loading
 - Fazer lista vazia

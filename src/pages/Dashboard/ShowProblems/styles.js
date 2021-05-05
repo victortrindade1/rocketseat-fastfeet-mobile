@@ -27,6 +27,12 @@ export const ProblemContainer = styled.View`
   margin-bottom: 16px;
 `;
 
+export const MessageContainer = styled.View`
+  max-width: 75%;
+`;
+
+export const DateContainer = styled.View``;
+
 export const Message = styled.Text`
   color: #999;
   font-size: 16px;

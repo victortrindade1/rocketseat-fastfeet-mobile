@@ -18,7 +18,7 @@ const AddProblem = ({ navigation }) => {
   const validationSchema = Yup.object().shape({
     problemTextInput: Yup.string()
       .min(3, 'Mensagem vazia!')
-      .max(500, 'Você excedeu o limite de 500 caracteres.')
+      .max(255, 'Você excedeu o limite de 255 caracteres.')
       .required('Campo obrigatório'),
   });
 
@@ -93,7 +93,7 @@ const AddProblem = ({ navigation }) => {
       </SendButton>
 
       <ContadorContainer>
-        <Contador>{String(char).length} / 500</Contador>
+        <Contador>{String(char).length} / 255</Contador>
       </ContadorContainer>
     </Background>
   );

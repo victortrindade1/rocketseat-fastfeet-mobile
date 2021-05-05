@@ -99,7 +99,8 @@ const ListDeliveries = ({ filter, userId }) => {
       if (response.data.items.length > 0) {
         // Parsing data:
         const data = parseDeliveries(response.data.items);
-        // setState(valor anterior, próximo valor)
+
+        // setDeliveries(valor anterior, próximo valor)
         setDeliveries([...deliveries, ...data]);
         setPage(page + 1);
       } else {
