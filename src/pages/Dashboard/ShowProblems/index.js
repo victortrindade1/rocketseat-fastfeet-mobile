@@ -5,6 +5,8 @@ import { Alert } from 'react-native';
 import api from '~/services/api';
 
 import Background from '~/components/Background';
+import Loading from '~/components/Loading';
+import Empty from '~/components/Empty';
 
 import {
   TitleContainer,
@@ -22,6 +24,7 @@ const ShowProblems = ({ navigation }) => {
   const { id } = navigation.state.params;
 
   const [problems, setProblems] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const parseResponse = useCallback(data => {
     return data.map(item => {
@@ -32,6 +35,8 @@ const ShowProblems = ({ navigation }) => {
   }, []);
 
   const loadProblems = useCallback(async () => {
+    setLoading(true);
+
     try {
       const response = await api.get(`delivery/${id}/problems`);
 
@@ -47,6 +52,8 @@ const ShowProblems = ({ navigation }) => {
         'Não foi possível carregar os problemas.',
       );
     }
+
+    setLoading(false);
   }, [api, id]);
 
   useEffect(() => {
@@ -59,21 +66,31 @@ const ShowProblems = ({ navigation }) => {
         <Title>Encomenda {stringId}</Title>
       </TitleContainer>
 
-      <ListProblems
-        keyExtractor={item => String(item.id)}
-        data={problems}
-        renderItem={({ item }) => (
-          <ProblemContainer>
-            <MessageContainer>
-              <Message>{item.description}</Message>
-            </MessageContainer>
+      {loading ? (
+        <Loading />
+      ) : (
+        <>
+          {problems.length > 0 ? (
+            <ListProblems
+              keyExtractor={item => String(item.id)}
+              data={problems}
+              renderItem={({ item }) => (
+                <ProblemContainer>
+                  <MessageContainer>
+                    <Message>{item.description}</Message>
+                  </MessageContainer>
 
-            <DateContainer>
-              <Date>{item.date}</Date>
-            </DateContainer>
-          </ProblemContainer>
-        )}
-      />
+                  <DateContainer>
+                    <Date>{item.date}</Date>
+                  </DateContainer>
+                </ProblemContainer>
+              )}
+            />
+          ) : (
+            <Empty message="Não existem problemas" />
+          )}
+        </>
+      )}
     </Background>
   );
 };

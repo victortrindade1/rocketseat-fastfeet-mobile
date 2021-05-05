@@ -1,7 +1,5 @@
 # O q vou fazer agora:
 
-Page ShowProblems.
+Page DeliveryDetails.
 
-- Conectar com api: OK
-- Fazer loading
-- Fazer lista vazia
+Fazer botão "Retirar para Entrega" grande no lugar do submenu pra caso status Pendente

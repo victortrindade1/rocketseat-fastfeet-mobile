@@ -2,18 +2,14 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { format, parseISO } from 'date-fns';
 import { Alert } from 'react-native';
 
-import noVisibility from '~/assets/visibility-off.json';
-
 import api from '~/services/api';
 
 import Delivery from '~/components/Delivery';
+import Loading from '~/components/Loading';
+import Empty from '~/components/Empty';
 
 import {
   List,
-  EmptyContainer,
-  EmptyText,
-  Lottie,
-  Loading,
   LoadingMoreContainer,
   LoadingMoreSpinner,
   LoadingMoreText,
@@ -179,10 +175,7 @@ const ListDeliveries = ({ filter, userId }) => {
               />
             </>
           ) : (
-            <EmptyContainer>
-              <Lottie source={noVisibility} autoPlay loop />
-              <EmptyText>Não existem entregas!</EmptyText>
-            </EmptyContainer>
+            <Empty message="Não existem entregas!" />
           )}
         </>
       )}
