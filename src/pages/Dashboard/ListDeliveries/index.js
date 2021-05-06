@@ -43,8 +43,6 @@ const ListDeliveries = ({ filter, userId }) => {
   const handleRefresh = useCallback(async () => {
     setHasMore(false);
     setRefreshing(true);
-    setDeliveries([]);
-    setPage(1);
 
     // Por mais idêntico q seja o código com o loadDeliveries(), tenho q fazer
     // separado pq senão zera o filtro pro estado inicial 'pending'
@@ -54,7 +52,7 @@ const ListDeliveries = ({ filter, userId }) => {
         {
           params: {
             q: filter,
-            page,
+            page: 1,
           },
         },
       );
@@ -123,7 +121,7 @@ const ListDeliveries = ({ filter, userId }) => {
         {
           params: {
             q: filter,
-            page,
+            page: 1,
           },
         },
       );

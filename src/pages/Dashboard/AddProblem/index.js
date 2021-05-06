@@ -85,7 +85,6 @@ const AddProblem = ({ navigation }) => {
         name="problemTextInput"
         multiline
         numberOfLines={15}
-        // onSubmitEditing={handleSubmit(onSubmit)}
       />
 
       <SendButton onPress={handleSubmit(onSubmit)} loading={loading}>

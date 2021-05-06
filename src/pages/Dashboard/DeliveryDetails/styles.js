@@ -1,6 +1,8 @@
 import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
+import Button from '~/components/Button';
+
 import { colors } from '~/styles/colors';
 
 export const Container = styled.View.attrs({
@@ -57,6 +59,10 @@ export const RowText = styled.Text`
 export const Div = styled.View`
   flex-direction: row;
   justify-content: space-between;
+`;
+
+export const StartButton = styled(Button)`
+  background-color: ${colors.ok};
 `;
 
 export const SubMenuContainer = styled.View.attrs({
