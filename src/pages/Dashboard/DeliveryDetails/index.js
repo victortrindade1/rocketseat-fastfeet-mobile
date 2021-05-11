@@ -153,7 +153,13 @@ const DeliveryDetails = ({ navigation }) => {
             <SubMenuButtonText>Visualizar{'\n'}Problemas</SubMenuButtonText>
           </SubMenuButton>
           <Separator />
-          <SubMenuButton>
+          <SubMenuButton
+            onPress={() => {
+              navigation.navigate('ConfirmDelivery', {
+                id: delivery.id,
+              });
+            }}
+          >
             <SubMenuButtonIcon type={'ok'} name={'check-circle-outline'} />
             <SubMenuButtonText>Confirmar{'\n'}Entrega</SubMenuButtonText>
           </SubMenuButton>

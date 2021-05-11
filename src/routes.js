@@ -1,16 +1,19 @@
 import React from 'react';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
-import { createStackNavigator } from 'react-navigation-stack';
+import {
+  createStackNavigator,
+  TransitionPresets,
+} from 'react-navigation-stack';
 import { TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-
 import SignIn from './pages/SignIn';
 import Dashboard from './pages/Dashboard';
 import DeliveryDetails from './pages/Dashboard/DeliveryDetails';
 import Profile from './pages/Profile';
 import AddProblem from './pages/Dashboard/AddProblem';
 import ShowProblems from './pages/Dashboard/ShowProblems';
+import ConfirmDelivery from './pages/Dashboard/ConfirmDelivery/';
 
 import { colors } from '~/styles/colors';
 
@@ -28,11 +31,13 @@ export default (signedIn = false) =>
                   DeliveryDetails,
                   AddProblem,
                   ShowProblems,
-                  // AnotherPage,
+                  ConfirmDelivery,
                 },
                 {
                   defaultNavigationOptions: ({ navigation }) => ({
-                    // mode: 'card',
+                    gestureEnabled: true, // Habilita voltar arrastando do canto esquerdo da tela
+                    ...TransitionPresets.SlideFromRightIOS, // Transição de tela por slide
+
                     headerTransparent: true,
                     headerTintColor: '#fff',
                     headerLeftContainerStyle: {
