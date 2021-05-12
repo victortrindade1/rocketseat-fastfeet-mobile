@@ -141,6 +141,7 @@ const ListDeliveries = ({ filter, userId }) => {
     // Zera o hasMore e loadingMore pro loadMore não atrapalhar qnd muda filtro
     setHasMore(true);
     setLoadingMore(false);
+    setLoading(false);
 
     loadDeliveries();
   }, [filter]);

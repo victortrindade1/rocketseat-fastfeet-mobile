@@ -6,4 +6,6 @@ Fique atento com o ip localhost do backend na api service. Pra ver seu IP
 
 # O q vou fazer agora:
 
+handleSendPicture
+
 Page ConfirmDelivery

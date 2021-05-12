@@ -8,17 +8,17 @@ import {
   ScrollContainer,
 } from './styles';
 
-const Background = ({ children, isFlatlist = false }) => {
+const Background = ({ children, useScroll = true }) => {
   return (
     <>
       <StatusBarStyled barStyle={'light-content'} />
 
       <Wrapper>
         <Header />
-        {isFlatlist ? (
-          <Container>{children}</Container>
-        ) : (
+        {useScroll ? (
           <ScrollContainer>{children}</ScrollContainer>
+        ) : (
+          <Container>{children}</Container>
         )}
       </Wrapper>
     </>

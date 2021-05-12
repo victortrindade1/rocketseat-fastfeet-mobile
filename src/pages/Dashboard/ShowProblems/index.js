@@ -61,7 +61,7 @@ const ShowProblems = ({ navigation }) => {
   }, []);
 
   return (
-    <Background isFlatlist={true}>
+    <Background useScroll={false}>
       <TitleContainer>
         <Title>Encomenda {stringId}</Title>
       </TitleContainer>
