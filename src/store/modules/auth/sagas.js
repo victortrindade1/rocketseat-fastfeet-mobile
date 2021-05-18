@@ -19,7 +19,6 @@ export function* signIn({ payload }) {
       'Falha na autenticação',
       'Houve um erro no login. Verifique seus dados',
     );
-    console.tron.log(err);
     yield put(signFailure());
   }
 }

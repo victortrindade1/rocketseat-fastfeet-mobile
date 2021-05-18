@@ -156,7 +156,7 @@ const DeliveryDetails = ({ navigation }) => {
           <SubMenuButton
             onPress={() => {
               navigation.navigate('ConfirmDelivery', {
-                id: delivery.id,
+                deliveryId: delivery.id,
               });
             }}
           >

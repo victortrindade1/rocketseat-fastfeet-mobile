@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Alert } from 'react-native';
 
+import api from '~/services/api';
+
 import Background from '~/components/Background';
 
 import {
@@ -14,10 +16,50 @@ import {
   PendingText,
 } from './styles';
 
-const ConfirmDelivery = () => {
+const ConfirmDelivery = ({ navigation }) => {
   const [pictureUri, setPictureUri] = useState(null);
+  // const [picture, setPicture] = useState(null);
 
-  const handleSendPicture = () => {};
+  const handleSendPicture = async () => {
+    try {
+      const pictureName = pictureUri.split('/').pop();
+
+      const dataFile = new FormData();
+
+      dataFile.append('file', {
+        uri: pictureUri,
+        type: 'image/jpg',
+        // type: 'image/jpeg',
+        name: pictureName,
+      });
+
+      // Cadastra foto
+      const responseFile = await api.post('delivery/signature', dataFile);
+
+      // Atualiza deliveries
+      const endDate = new Date();
+      const signatureId = responseFile.data.id;
+      const delivery = {
+        end_date: endDate,
+        signature_id: signatureId,
+      };
+
+      const { deliveryId } = navigation.state.params;
+
+      await api.put(`mobile/deliveries/${deliveryId}`, delivery);
+
+      // Volta pra tela anterior
+      navigation.goBack();
+
+      // Fazer toast
+
+      // Queria q o botão de enviar só aparecesse ao tirar a foto
+
+      // Tenho q editar um useEffect pra verificar se está concluido ao renderizar, q aí nem abre o submenu, e mostra data de entrega
+    } catch (error) {
+      console.tron.log(error);
+    }
+  };
 
   const takePicture = async camera => {
     try {
