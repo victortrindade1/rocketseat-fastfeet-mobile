@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Alert } from 'react-native';
 import Toast from 'react-native-simple-toast';
 import { StackActions, NavigationActions } from 'react-navigation';
+import { useSelector } from 'react-redux';
 
 import Background from '~/components/Background';
 
@@ -25,11 +26,9 @@ import {
 } from './styles';
 
 const DeliveryDetails = ({ navigation }) => {
-  const delivery = navigation.state.params;
+  const delivery = useSelector(state => state.delivery.deliveryDetails);
 
   const [loading, setLoading] = useState(false);
-
-  delivery.recipient.address = `${delivery.recipient.street}, ${delivery.recipient.number}, ${delivery.recipient.city} - ${delivery.recipient.state}, ${delivery.recipient.zipcode}`;
 
   const navigationReset = () => {
     const resetAction = StackActions.reset({
@@ -70,20 +69,6 @@ const DeliveryDetails = ({ navigation }) => {
 
     setLoading(false);
   };
-
-  const status = () => {
-    if (delivery.canceled_at) {
-      return 'Cancelado';
-    } else if (!delivery.start_date) {
-      return 'Pendente';
-    } else if (delivery.end_date) {
-      return 'Entregue';
-    } else {
-      return 'Retirado';
-    }
-  };
-
-  delivery.status = status();
 
   return (
     <Background>

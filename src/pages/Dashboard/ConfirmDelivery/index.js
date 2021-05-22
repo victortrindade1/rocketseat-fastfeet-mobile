@@ -1,5 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Alert } from 'react-native';
+import Toast from 'react-native-simple-toast';
+import { useDispatch, useSelector } from 'react-redux';
+import { format } from 'date-fns';
+
+import { storeDeliveryData } from '~/store/modules/delivery/actions';
 
 import api from '~/services/api';
 
@@ -17,11 +22,29 @@ import {
 } from './styles';
 
 const ConfirmDelivery = ({ navigation }) => {
+  const dispatch = useDispatch();
+
+  const deliveryStored = useSelector(state => state.delivery);
+
   const [pictureUri, setPictureUri] = useState(null);
-  // const [picture, setPicture] = useState(null);
+  const [hasPicture, setHasPicture] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const addFieldsDelivery = (delivery, endDate) => {
+    const endDateFormatted = format(endDate, 'dd/MM/yyyy');
+
+    return {
+      ...delivery.deliveryDetails,
+      end_date: endDate,
+      end_date_formatted: endDateFormatted,
+      status: 'Entregue',
+    };
+  };
 
   const handleSendPicture = async () => {
     try {
+      setLoading(true);
+
       const pictureName = pictureUri.split('/').pop();
 
       const dataFile = new FormData();
@@ -29,7 +52,6 @@ const ConfirmDelivery = ({ navigation }) => {
       dataFile.append('file', {
         uri: pictureUri,
         type: 'image/jpg',
-        // type: 'image/jpeg',
         name: pictureName,
       });
 
@@ -39,25 +61,31 @@ const ConfirmDelivery = ({ navigation }) => {
       // Atualiza deliveries
       const endDate = new Date();
       const signatureId = responseFile.data.id;
-      const delivery = {
+      const updateDelivery = {
         end_date: endDate,
         signature_id: signatureId,
       };
 
       const { deliveryId } = navigation.state.params;
 
-      await api.put(`mobile/deliveries/${deliveryId}`, delivery);
+      await api.put(`mobile/deliveries/${deliveryId}`, updateDelivery);
+
+      // Atualiza state
+      const deliveryDetails = addFieldsDelivery(deliveryStored, endDate);
+      dispatch(storeDeliveryData(deliveryDetails));
+
+      setLoading(false);
+
+      Toast.showWithGravity('Enviado com sucesso!', Toast.LONG, Toast.TOP);
 
       // Volta pra tela anterior
       navigation.goBack();
-
-      // Fazer toast
-
-      // Queria q o botão de enviar só aparecesse ao tirar a foto
-
-      // Tenho q editar um useEffect pra verificar se está concluido ao renderizar, q aí nem abre o submenu, e mostra data de entrega
     } catch (error) {
-      console.tron.log(error);
+      Alert.alert(
+        'Falha no envio',
+        'Não foi possível enviar foto, por favor tente mais tarde.',
+      );
+      setLoading(false);
     }
   };
 
@@ -69,12 +97,16 @@ const ConfirmDelivery = ({ navigation }) => {
         const data = await camera.takePictureAsync(options);
 
         setPictureUri(data.uri);
+        setHasPicture(true);
       }
     } catch (error) {
-      console.tron.log('Error: ', error);
       Alert.alert('Falha ao tirar foto', 'Não foi possível tirar foto.');
     }
   };
+
+  useEffect(() => {
+    setHasPicture(false);
+  }, []);
 
   return (
     <Background useScroll={false}>
@@ -106,7 +138,11 @@ const ConfirmDelivery = ({ navigation }) => {
           </Camera>
         )}
       </PhotoContainer>
-      <SendButton onPress={handleSendPicture}>Enviar</SendButton>
+      {hasPicture && (
+        <SendButton onPress={handleSendPicture} loading={loading}>
+          Enviar
+        </SendButton>
+      )}
     </Background>
   );
 };

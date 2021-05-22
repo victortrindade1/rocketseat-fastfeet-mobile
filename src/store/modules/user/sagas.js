@@ -7,29 +7,29 @@ import { updateProfileSuccess, updateProfileFailure } from './actions';
 
 // ! AINDA NÃO FOI ADAPTADO
 
-export function* updateProfile({ payload }) {
-  try {
-    const { name, email, avatar_id, ...rest } = payload.data;
+// export function* updateProfile({ payload }) {
+//   try {
+//     const { name, email, avatar_id, ...rest } = payload.data;
 
-    const profile = {
-      name,
-      email,
-      avatar_id,
-      ...(rest.oldPassword ? rest : {}),
-    };
+//     const profile = {
+//       name,
+//       email,
+//       avatar_id,
+//       ...(rest.oldPassword ? rest : {}),
+//     };
 
-    const response = yield call(api.put, 'users', profile);
+//     const response = yield call(api.put, 'users', profile);
 
-    Alert.alert('Sucesso!', 'Perfil atualizado com sucesso!');
+//     Alert.alert('Sucesso!', 'Perfil atualizado com sucesso!');
 
-    yield put(updateProfileSuccess(response.data));
-  } catch (err) {
-    Alert.alert(
-      'Falha na autenticação',
-      'Erro ao atualizar perfil, confira seus dados!',
-    );
-    yield put(updateProfileFailure());
-  }
-}
+//     yield put(updateProfileSuccess(response.data));
+//   } catch (err) {
+//     Alert.alert(
+//       'Falha na autenticação',
+//       'Erro ao atualizar perfil, confira seus dados!',
+//     );
+//     yield put(updateProfileFailure());
+//   }
+// }
 
-export default all([takeLatest('@user/UPDATE_PROFILE_REQUEST', updateProfile)]);
+// export default all([takeLatest('@user/UPDATE_PROFILE_REQUEST', updateProfile)]);
