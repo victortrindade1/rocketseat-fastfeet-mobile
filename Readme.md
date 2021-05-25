@@ -1,17 +1,7 @@
-# P/ rodar localhost:
+# Desafio 10: Fastfeet mobile
 
-Fique atento com o ip localhost do backend na api service. Pra ver seu IP
+Etapa 4/4 do Desafio Final
 
-> hostname -I
+Descrição Desafio: https://github.com/rocketseat-education/bootcamp-gostack-desafio-10#desafio-10-mobile-do-meetapp
 
-# O q vou fazer agora:
-
-Vou melhorar o empty list
-
-Ao confirmar entrega, o dashboard não está dando refresh sozinho. Só daria se a lista estivesse no redux tb ;) Não vou fazer. Já sei como faz, preciso terminar esse programa
-
-Vou esconder o submenu de Delivery Details.
-
-Tb quero usufruir do state em vez de puxar dados como parâmetro do navigation.
-
-E aí, acabou!
+Print Layout das telas: https://xd.adobe.com/view/a5d56d7d-c1d4-48a8-70ce-8b77f5f417a5-d3e4/specs/

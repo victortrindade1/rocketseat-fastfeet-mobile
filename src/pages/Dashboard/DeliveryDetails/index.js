@@ -131,39 +131,41 @@ const DeliveryDetails = ({ navigation }) => {
           Retirar para entrega
         </StartButton>
       ) : (
-        <SubMenuContainer>
-          <SubMenuButton
-            onPress={() => {
-              navigation.navigate('AddProblem', delivery.id);
-            }}
-          >
-            <SubMenuButtonIcon type={'danger'} name={'highlight-off'} />
-            <SubMenuButtonText>Informar{'\n'}Problema</SubMenuButtonText>
-          </SubMenuButton>
-          <Separator />
-          <SubMenuButton
-            onPress={() => {
-              navigation.navigate('ShowProblems', {
-                id: delivery.id,
-                stringId: delivery.stringId,
-              });
-            }}
-          >
-            <SubMenuButtonIcon type={'warn'} name={'info-outline'} />
-            <SubMenuButtonText>Visualizar{'\n'}Problemas</SubMenuButtonText>
-          </SubMenuButton>
-          <Separator />
-          <SubMenuButton
-            onPress={() => {
-              navigation.navigate('ConfirmDelivery', {
-                deliveryId: delivery.id,
-              });
-            }}
-          >
-            <SubMenuButtonIcon type={'ok'} name={'check-circle-outline'} />
-            <SubMenuButtonText>Confirmar{'\n'}Entrega</SubMenuButtonText>
-          </SubMenuButton>
-        </SubMenuContainer>
+        delivery.status === 'Retirado' && (
+          <SubMenuContainer>
+            <SubMenuButton
+              onPress={() => {
+                navigation.navigate('AddProblem', delivery.id);
+              }}
+            >
+              <SubMenuButtonIcon type={'danger'} name={'highlight-off'} />
+              <SubMenuButtonText>Informar{'\n'}Problema</SubMenuButtonText>
+            </SubMenuButton>
+            <Separator />
+            <SubMenuButton
+              onPress={() => {
+                navigation.navigate('ShowProblems', {
+                  id: delivery.id,
+                  stringId: delivery.stringId,
+                });
+              }}
+            >
+              <SubMenuButtonIcon type={'warn'} name={'info-outline'} />
+              <SubMenuButtonText>Visualizar{'\n'}Problemas</SubMenuButtonText>
+            </SubMenuButton>
+            <Separator />
+            <SubMenuButton
+              onPress={() => {
+                navigation.navigate('ConfirmDelivery', {
+                  deliveryId: delivery.id,
+                });
+              }}
+            >
+              <SubMenuButtonIcon type={'ok'} name={'check-circle-outline'} />
+              <SubMenuButtonText>Confirmar{'\n'}Entrega</SubMenuButtonText>
+            </SubMenuButton>
+          </SubMenuContainer>
+        )
       )}
     </Background>
   );
