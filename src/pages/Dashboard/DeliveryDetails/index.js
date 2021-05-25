@@ -2,7 +2,10 @@ import React, { useState } from 'react';
 import { Alert } from 'react-native';
 import Toast from 'react-native-simple-toast';
 import { StackActions, NavigationActions } from 'react-navigation';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { format } from 'date-fns';
+
+import { storeDeliveryData } from '~/store/modules/delivery/actions';
 
 import Background from '~/components/Background';
 
@@ -26,6 +29,8 @@ import {
 } from './styles';
 
 const DeliveryDetails = ({ navigation }) => {
+  const dispatch = useDispatch();
+
   const delivery = useSelector(state => state.delivery.deliveryDetails);
 
   const [loading, setLoading] = useState(false);
@@ -38,6 +43,17 @@ const DeliveryDetails = ({ navigation }) => {
     navigation.dispatch(resetAction);
   };
 
+  const startDeliveryStore = (delivery, startDate) => {
+    const startDateFormatted = format(startDate, 'dd/MM/yyyy');
+
+    return {
+      ...delivery,
+      start_date: startDate,
+      start_date_formatted: startDateFormatted,
+      status: 'Retirado',
+    };
+  };
+
   const handleStart = async () => {
     setLoading(true);
 
@@ -48,16 +64,15 @@ const DeliveryDetails = ({ navigation }) => {
         start_date: startDate,
       });
 
+      // Atualiza state
+      const deliveryDetails = startDeliveryStore(delivery, startDate);
+      dispatch(storeDeliveryData(deliveryDetails));
+
       Toast.showWithGravity('Retirado com sucesso!', Toast.LONG, Toast.TOP);
-
-      delivery.start_date = startDate;
-
-      delivery.status = status();
 
       navigationReset();
     } catch (error) {
       if (error.response) {
-        console.tron.log(error.response.data);
         Alert.alert('Falha no envio', error.response.data.error);
       } else {
         Alert.alert(

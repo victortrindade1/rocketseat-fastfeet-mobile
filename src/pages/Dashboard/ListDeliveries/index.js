@@ -152,30 +152,31 @@ const ListDeliveries = ({ filter, userId }) => {
         <Loading />
       ) : (
         <>
-          {deliveries.length > 0 ? (
-            <>
-              <List
-                data={deliveries}
-                keyExtractor={item => String(item.id)}
-                onEndReachedThreshold={0.5}
-                onEndReached={loadMoreDeliveries}
-                refreshControl={
-                  <Refresh refreshing={refreshing} onRefresh={handleRefresh} />
-                }
-                renderItem={({ item }) => <Delivery data={item} />}
-                ListFooterComponent={
-                  hasMore && (
-                    <LoadingMoreContainer>
-                      <LoadingMoreSpinner />
-                      <LoadingMoreText>Carregando...</LoadingMoreText>
-                    </LoadingMoreContainer>
-                  )
-                }
-              />
-            </>
+          {/* {deliveries.length > 0 ? (
+            <> */}
+          <List
+            data={deliveries}
+            keyExtractor={item => String(item.id)}
+            onEndReachedThreshold={0.5}
+            onEndReached={loadMoreDeliveries}
+            refreshControl={
+              <Refresh refreshing={refreshing} onRefresh={handleRefresh} />
+            }
+            renderItem={({ item }) => <Delivery data={item} />}
+            ListEmptyComponent={() => <Empty message="Não existem entregas!" />}
+            ListFooterComponent={
+              hasMore && (
+                <LoadingMoreContainer>
+                  <LoadingMoreSpinner />
+                  <LoadingMoreText>Carregando...</LoadingMoreText>
+                </LoadingMoreContainer>
+              )
+            }
+          />
+          {/* </>
           ) : (
             <Empty message="Não existem entregas!" />
-          )}
+          )} */}
         </>
       )}
     </>

@@ -24,17 +24,17 @@ import {
 const ConfirmDelivery = ({ navigation }) => {
   const dispatch = useDispatch();
 
-  const deliveryStored = useSelector(state => state.delivery);
+  const delivery = useSelector(state => state.delivery.deliveryDetails);
 
   const [pictureUri, setPictureUri] = useState(null);
   const [hasPicture, setHasPicture] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const addFieldsDelivery = (delivery, endDate) => {
+  const endDeliveryStore = (delivery, endDate) => {
     const endDateFormatted = format(endDate, 'dd/MM/yyyy');
 
     return {
-      ...delivery.deliveryDetails,
+      ...delivery,
       end_date: endDate,
       end_date_formatted: endDateFormatted,
       status: 'Entregue',
@@ -68,10 +68,10 @@ const ConfirmDelivery = ({ navigation }) => {
 
       const { deliveryId } = navigation.state.params;
 
-      await api.put(`mobile/deliveries/${deliveryId}`, updateDelivery);
+      await api.put(`delivery/${deliveryId}`, updateDelivery);
 
       // Atualiza state
-      const deliveryDetails = addFieldsDelivery(deliveryStored, endDate);
+      const deliveryDetails = endDeliveryStore(delivery, endDate);
       dispatch(storeDeliveryData(deliveryDetails));
 
       setLoading(false);
