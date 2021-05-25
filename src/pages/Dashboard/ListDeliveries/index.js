@@ -152,8 +152,6 @@ const ListDeliveries = ({ filter, userId }) => {
         <Loading />
       ) : (
         <>
-          {/* {deliveries.length > 0 ? (
-            <> */}
           <List
             data={deliveries}
             keyExtractor={item => String(item.id)}
@@ -165,7 +163,8 @@ const ListDeliveries = ({ filter, userId }) => {
             renderItem={({ item }) => <Delivery data={item} />}
             ListEmptyComponent={() => <Empty message="Não existem entregas!" />}
             ListFooterComponent={
-              hasMore && (
+              hasMore &&
+              deliveries.length > 0 && (
                 <LoadingMoreContainer>
                   <LoadingMoreSpinner />
                   <LoadingMoreText>Carregando...</LoadingMoreText>
@@ -173,10 +172,6 @@ const ListDeliveries = ({ filter, userId }) => {
               )
             }
           />
-          {/* </>
-          ) : (
-            <Empty message="Não existem entregas!" />
-          )} */}
         </>
       )}
     </>

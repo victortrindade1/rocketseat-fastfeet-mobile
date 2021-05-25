@@ -8,9 +8,7 @@ Fique atento com o ip localhost do backend na api service. Pra ver seu IP
 
 Vou melhorar o empty list
 
-Existe um controller específico pra confirmar entrega, q eu não implementei.
-
-Ao confirmar entrega, o dashboard não está dando refresh sozinho.
+Ao confirmar entrega, o dashboard não está dando refresh sozinho. Só daria se a lista estivesse no redux tb ;) Não vou fazer. Já sei como faz, preciso terminar esse programa
 
 Vou esconder o submenu de Delivery Details.
 
